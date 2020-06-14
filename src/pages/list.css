@@ -1,0 +1,5 @@
+.ant-table-tbody tr.ant-table-row-level-0:hover {
+  transform: scale(1.02);
+  transition: 0.6s;
+  /* flex-direction: column; */
+}
