@@ -1,31 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
-export default function Sidebar(props) {
+export default function Sidebar({ save, onDelete }) {
+  const [auto, setAuto] = useState(false);
+  useEffect(() => {
+    if (auto === true) {
+      const interval = setInterval(save, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [auto, save]);
   const btns = [
     {
       title: 'Save',
       onClick: () => {
-        console.log('');
+        save();
       },
     },
     {
       title: 'Auto Save',
       onClick: () => {
-        console.log('Auto Save');
+        setAuto((state) => !state);
       },
     },
     {
       title: 'Delete',
       onClick: () => {
         console.log('Delete');
+        onDelete();
       },
     },
   ];
-  const mapBtns = btns.map((btn, i) => (
-    <Button type="primary" onClick={btn.onClick}>
-      {btn.title}
-    </Button>
-  ));
+
+  const mapBtns = btns.map((btn, i) =>
+    i === 1 ? (
+      <Button key={i} type={auto ? 'dashed' : 'primary'} onClick={btn.onClick}>
+        {btn.title}
+      </Button>
+    ) : (
+      <Button key={i} type="primary" onClick={btn.onClick}>
+        {btn.title}
+      </Button>
+    )
+  );
   return (
     <div style={style}>
       <div style={child}>{mapBtns}</div>
@@ -33,21 +48,18 @@ export default function Sidebar(props) {
   );
 }
 const style = {
-  width: '19%',
+  width: '50%',
   height: '100%',
-  padding: '10px',
-  paddingLeft: '4vw',
   display: 'flex',
-  flexFlow: 'column nowrap',
-  justifyContent: 'flex-start',
-  alignItems: 'flex-start',
+  flexFlow: 'row nowrap',
+  alignItems: 'center',
 };
 const child = {
   width: '100%',
-  height: '50%',
+  height: '100%',
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   flexWrap: 'nowrap',
   justifyContent: 'space-around',
-  alignItems: 'flex-start',
+  alignItems: 'center',
 };

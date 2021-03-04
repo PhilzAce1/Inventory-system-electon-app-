@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- <link rel="stylesheet" href="css/form.css" /> -->
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        Esmin's Inventory System
+      </div>
+      <div class="main">
+        <table>
+          <th>Extension</th>
+          <th>Vertical</th>
+          <th>Position</th>
+          <th>Location</th>
+          <th style="border: none;"></th>
+          <!-- <tr>
+            <td>
+              <span>I am doing somethijng</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td>
+              <span>I am doing somethijng</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td>
+              <span>I am doing somethijng</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td class="last-on-row">
+              <span>I am doing somethijng</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td
+              style="display: flex;flex-flow: row;align-items: center; border: none;"
+            >
+              <button class=" del" style="background:red">
+                X
+              </button>
+            </td>
+          </tr> -->
+          <!-- <tr>
+            <td>
+              <span>There is somethijng wrong</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td>
+              <span>There is somethijng wrong</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td>
+              <span>There is somethijng wrong</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td class="last-on-row">
+              <span>There is somethijng wrong</span>
+              <button class=" add edit-btn">edit</button>
+            </td>
+            <td
+              style="display: flex;flex-flow: row;align-items: center; border: none;"
+            >
+              <button class=" del" style="background:red">
+                X
+              </button>
+            </td>
+          </tr> -->
+        </table>
+      </div>
+      <div class="btn-container">
+        <button class="add" id="show-search">search</button>
+
+        <button class="add" id="add">Add</button>
+      </div>
+    </div>
+    <div class="form" style="border: 2px solid black;">
+      <h2 class="form-header">Please fill the following</h2>
+      <div class="form-container">
+        <form>
+          <div class="form-field">
+            <label for="first-column">Extension</label>
+            <input
+              class="form-field-input"
+              type="text"
+              name="first-column"
+              id="first-column "
+            />
+          </div>
+          <div class="form-field">
+            <label for="second-column">Vertical</label>
+            <input
+              class="form-field-input"
+              type="text"
+              name="second-column"
+              id="second-column"
+            />
+          </div>
+          <div class="form-field">
+            <label for="third-column">Position</label>
+            <input
+              class="form-field-input"
+              type="text"
+              name="third-column"
+              id="third-column"
+            />
+          </div>
+          <div class="form-field">
+            <label for="fourth column">Location</label>
+            <input
+              class="form-field-input"
+              type="text"
+              name="fourth column"
+              id="fourth column"
+            />
+          </div>
+        </form>
+      </div>
+      <button class=" add confirm" onclick="handleSubmit();" id="btn-done">
+        Done
+      </button>
+    </div>
+    <div class="form search-form" style="border: 2px solid black; display:none">
+      <h2 class="form-header">Please fill the following</h2>
+      <div class="form-container">
+        <form>
+          <div class="form-field">
+            <label for="search">Extension</label>
+            <input
+              class="form-field-input"
+              type="text"
+              name="search"
+              id="search "
+            />
+          </div>
+        </form>
+      </div>
+      <button class=" add confirm" id="search-btn">
+        search
+      </button>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/form.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/search.js"></script>
+  </body>
+</html>

@@ -1,38 +1,13 @@
 import React, { useState } from 'react';
 import { PlusCircleFilled } from '@ant-design/icons';
-import { Table, Radio, Button, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import Input from '../components/Input';
 import Tabz from '../components/Tabz';
+import Formz from '../components/Form';
+import Sidebar from './Sidebar';
+
 import 'antd/dist/antd.css';
 import './list.css';
-
-let tableData = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
-  },
-];
-// rowSelection object indicates the need for row selection
 
 // const rowSelection = {
 //   onChange: (selectedRowKeys, selectedRows) => {
@@ -49,11 +24,7 @@ let tableData = [
 //   }),
 // };
 
-function NavForLIsting({ isOpen, onOk, onCancel, openModal }) {
-  const [name, setName] = useState();
-  const [address, setAddress] = useState();
-  const [age, setAge] = useState();
-
+function NavForLIsting({ isOpen, onOk, onCancel, openModal, save, onDelete }) {
   return (
     <div style={style.nav}>
       <Input color={'white'} />
@@ -67,6 +38,7 @@ function NavForLIsting({ isOpen, onOk, onCancel, openModal }) {
         <PlusCircleFilled />
         Add Item
       </Button>
+      <Sidebar save={save} onDelete={onDelete} />
       <Modal
         visible={isOpen}
         title="Add Items"
@@ -76,36 +48,63 @@ function NavForLIsting({ isOpen, onOk, onCancel, openModal }) {
           <Button key="back" onClick={onCancel}>
             Back
           </Button>,
-          <Button key="Add Iteem" type="primary" loading={false} onClick={onOk}>
-            Add Item
-          </Button>,
         ]}
-      ></Modal>
+      >
+        <Formz onOk={onOk} />
+      </Modal>
     </div>
   );
 }
+
+// localStorage.getItem('data') !== null ||
+// localStorage.getItem('data') !== undefined
+//   ? JSON.parse(localStorage.getItem('data'))
+//   :
 export default function List() {
-  const [data, setData] = useState(tableData);
+  const savedData = [];
+  const [data, setData] = useState(savedData);
   const [isOpen, setIsOpen] = useState(false);
+  const [toDel, setToDel] = useState([]);
+  const setters = (key, data) => {
+    setToDel(data);
+    console.log(data);
+  };
+
   const openModal = () => {
     return setIsOpen(true);
   };
-  const onOk = () => {
+  const onOk = ({ name, age, address }) => {
     setData(
-      (state) =>
-        // state.push(
-        [
+      (state) => {
+        return [
           {
-            key: '5',
-            name: 'Ten  Blue',
-            age: 40,
-            address: 'London No. 2 Lake Park',
+            key: state.length + 1,
+            name,
+            age,
+            address,
           },
           ...state,
-        ]
+        ];
+      }
       // )
     );
     setIsOpen(false);
+  };
+
+  const save = () => {
+    window.localStorage.setItem('data', JSON.stringify(data));
+  };
+
+  const onDelete = () => {
+    console.log(toDel);
+    toDel.forEach((del) =>
+      setData((state) => {
+        return state.filter((x) => x === del.key);
+      })
+    );
+    // setTimeout(() => {
+    //   save();
+    // }, 2000);
   };
 
   const onCancel = () => {
@@ -119,12 +118,16 @@ export default function List() {
         onCancel={onCancel}
         isOpen={isOpen}
         openModal={openModal}
+        save={save}
+        onDelete={onDelete}
       />
 
-      <Tabz data={data} />
+      <Tabz data={data} setters={setters} />
     </div>
   );
 }
+
+/** ===============Style======================= */
 const style = {
   body: {
     background: 'white',

@@ -1,11 +1,10 @@
 import React from 'react';
-import Sidebar from './Sidebar';
+// import Sidebar from './Sidebar';
 import List from './List';
 
 function Main(props) {
   return (
     <div style={style.body}>
-      <Sidebar />
       <List />
     </div>
   );

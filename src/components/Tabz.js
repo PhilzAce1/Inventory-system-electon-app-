@@ -3,20 +3,20 @@ import Highlighter from 'react-highlight-words';
 import React from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(
-      `selectedRowKeys: ${selectedRowKeys}`,
-      'selectedRows: ',
-      selectedRows
-    );
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    // Column configuration not to be checked
-    name: record.name,
-  }),
-};
+// const rowSelection = {
+//   onChange: (selectedRowKeys, selectedRows) => {
+//     console.log(
+//       `selectedRowKeys: ${selectedRowKeys}`,
+//       'selectedRows: ',
+//       selectedRows
+//     );
+//   },
+//   getCheckboxProps: (record) => ({
+//     disabled: record.name === 'Disabled User',
+//     // Column configuration not to be checked
+//     name: record.name,
+//   }),
+// };
 
 class Tabz extends React.Component {
   state = {
@@ -102,6 +102,21 @@ class Tabz extends React.Component {
     this.setState({ searchText: '' });
   };
 
+  rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      this.props.setters(selectedRowKeys, selectedRowKeys);
+      // console.log(
+      //   `selectedRowKeys: ${selectedRowKeys}`,
+      //   'selectedRows: ',
+      //   selectedRows
+      // );
+    },
+    getCheckboxProps: (record) => ({
+      disabled: record.name === 'Disabled User',
+      // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
   render() {
     const columns = [
       {
@@ -133,7 +148,7 @@ class Tabz extends React.Component {
         dataSource={this.props.data}
         rowSelection={{
           type: 'checkbox',
-          ...rowSelection,
+          ...this.rowSelection,
         }}
       />
     );

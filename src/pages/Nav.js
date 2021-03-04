@@ -1,10 +1,10 @@
 import React from 'react';
-import Input from '../components/Input';
+// import Input from '../components/Input';
 function Nav(props) {
   return (
     <div style={style.body}>
       <div style={style.firstDiv}>
-        <h3>Ben's App</h3>
+        <h3>Fauna Electron App</h3>
       </div>
     </div>
   );
