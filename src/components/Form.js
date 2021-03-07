@@ -13,7 +13,6 @@ const tailLayout = {
 export default function Formz({ onOk }) {
   const onFinish = (values) => {
     onOk(values);
-    console.log('Success:', values);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -29,25 +28,25 @@ export default function Formz({ onOk }) {
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
-        label="Name"
-        name="name"
-        rules={[{ required: true, message: 'Please input name!' }]}
+        label="Product"
+        name="product"
+        rules={[{ required: true, message: 'Please input name of Product!' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="Age"
-        name="age"
-        rules={[{ required: true, message: 'Please input age!' }]}
+        label="Count"
+        name="count"
+        rules={[{ required: true, message: 'Please input Product Count!' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="address"
-        name="address"
-        rules={[{ required: true, message: 'Please input address!' }]}
+        label="Product Id"
+        name="id"
+        rules={[{ required: true, message: 'Please input Product Id!' }]}
       >
         <Input />
       </Form.Item>

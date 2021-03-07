@@ -1,4 +1,4 @@
-let tableData = [
+export let tableData = [
   {
     key: '1',
     name: 'John Brown',
@@ -24,3 +24,18 @@ let tableData = [
     address: 'London No. 2 Lake Park',
   },
 ];
+
+// const rowSelection = {
+//   onChange: (selectedRowKeys, selectedRows) => {
+//     console.log(
+//       `selectedRowKeys: ${selectedRowKeys}`,
+//       'selectedRows: ',
+//       selectedRows
+//     );
+//   },
+//   getCheckboxProps: (record) => ({
+//     disabled: record.name === 'Disabled User',
+//     // Column configuration not to be checked
+//     name: record.name,
+//   }),
+// };

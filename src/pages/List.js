@@ -1,93 +1,92 @@
-import React, { useState } from 'react';
-import { PlusCircleFilled } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
-import Input from '../components/Input';
+import React, { useState, useEffect } from 'react';
 import Tabz from '../components/Tabz';
-import Formz from '../components/Form';
-import Sidebar from './Sidebar';
-
+import NavForListing from '../components/ListingNavigation';
+import { useQuery, gql, useMutation } from '@apollo/react-hooks';
 import 'antd/dist/antd.css';
 import './list.css';
 
-// const rowSelection = {
-//   onChange: (selectedRowKeys, selectedRows) => {
-//     console.log(
-//       `selectedRowKeys: ${selectedRowKeys}`,
-//       'selectedRows: ',
-//       selectedRows
-//     );
-//   },
-//   getCheckboxProps: (record) => ({
-//     disabled: record.name === 'Disabled User',
-//     // Column configuration not to be checked
-//     name: record.name,
-//   }),
-// };
-
-function NavForLIsting({ isOpen, onOk, onCancel, openModal, save, onDelete }) {
-  return (
-    <div style={style.nav}>
-      <Input color={'white'} />
-      <Button
-        type="primary"
-        style={{
-          margin: '10px',
-        }}
-        onClick={openModal}
-      >
-        <PlusCircleFilled />
-        Add Item
-      </Button>
-      <Sidebar save={save} onDelete={onDelete} />
-      <Modal
-        visible={isOpen}
-        title="Add Items"
-        onOk={onOk}
-        onCancel={onCancel}
-        footer={[
-          <Button key="back" onClick={onCancel}>
-            Back
-          </Button>,
-        ]}
-      >
-        <Formz onOk={onOk} />
-      </Modal>
-    </div>
-  );
-}
-
-// localStorage.getItem('data') !== null ||
-// localStorage.getItem('data') !== undefined
-//   ? JSON.parse(localStorage.getItem('data'))
-//   :
 export default function List() {
   const savedData = [];
   const [data, setData] = useState(savedData);
   const [isOpen, setIsOpen] = useState(false);
   const [toDel, setToDel] = useState([]);
+  // const getInventoryItems = () => {
+  const listInvetoryItems = /**GRAPHQL */ gql`
+    query {
+      allInventories {
+        data {
+          count
+          product
+          id
+          _id
+        }
+      }
+    }
+  `;
+  const { data: inventoryData, error, loading } = useQuery(listInvetoryItems);
+
+  const addInventoryMutation = /** GraphQL mutation */ gql`
+    mutation CreateInventoryItem($data: InventoryInput!) {
+      createInventory(data: $data) {
+        count
+        id
+        product
+        _id
+      }
+    }
+  `;
+
+  const deleteInventoryMutation = /** GraphQL delete Mutation */ gql`
+    mutation DeleteInventoryItem($id: ID!) {
+      deleteInventory(id: $id) {
+        count
+        id
+        product
+        _id
+      }
+    }
+  `;
+  const [createItem] = useMutation(addInventoryMutation, {
+    onCompleted: (data) => {
+      const { createInventory } = data;
+      setData((state) => {
+        return [{ ...createInventory, key: createInventory._id }, ...state];
+      });
+    },
+  });
+  const [deleteItem] = useMutation(deleteInventoryMutation, {
+    onCompleted: (data) => {
+      setData((state) => {
+        return state.filter((x) => x.key !== data.deleteInventory._id);
+      });
+    },
+  });
+  useEffect(() => {
+    // setData(inventoryData);
+    if (
+      inventoryData &&
+      inventoryData.allInventories &&
+      inventoryData.allInventories.data
+    ) {
+      const newData = inventoryData.allInventories.data.map((data) => ({
+        ...data,
+        key: data._id,
+      }));
+      setData(newData);
+    }
+    if (error && loading === false) {
+      console.log('I think we have an error');
+    }
+  }, [inventoryData, error, loading]);
   const setters = (key, data) => {
     setToDel(data);
-    console.log(data);
   };
 
   const openModal = () => {
     return setIsOpen(true);
   };
-  const onOk = ({ name, age, address }) => {
-    setData(
-      (state) => {
-        return [
-          {
-            key: state.length + 1,
-            name,
-            age,
-            address,
-          },
-          ...state,
-        ];
-      }
-      // )
-    );
+  const onOk = ({ product, count, id }) => {
+    createItem({ variables: { data: { product, count, id } } });
     setIsOpen(false);
   };
 
@@ -96,15 +95,9 @@ export default function List() {
   };
 
   const onDelete = () => {
-    console.log(toDel);
-    toDel.forEach((del) =>
-      setData((state) => {
-        return state.filter((x) => x === del.key);
-      })
-    );
-    // setTimeout(() => {
-    //   save();
-    // }, 2000);
+    toDel.forEach((del) => {
+      deleteItem({ variables: { id: del } });
+    });
   };
 
   const onCancel = () => {
@@ -113,7 +106,7 @@ export default function List() {
 
   return (
     <div style={style.body}>
-      <NavForLIsting
+      <NavForListing
         onOk={onOk}
         onCancel={onCancel}
         isOpen={isOpen}

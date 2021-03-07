@@ -4,6 +4,7 @@ export default function Sidebar({ save, onDelete }) {
   const [auto, setAuto] = useState(false);
   useEffect(() => {
     if (auto === true) {
+      // Interval set to automatically save the current progress of the Inventory application
       const interval = setInterval(save, 1000);
       return () => clearInterval(interval);
     }
@@ -11,9 +12,7 @@ export default function Sidebar({ save, onDelete }) {
   const btns = [
     {
       title: 'Save',
-      onClick: () => {
-        save();
-      },
+      onClick: save,
     },
     {
       title: 'Auto Save',
@@ -23,10 +22,7 @@ export default function Sidebar({ save, onDelete }) {
     },
     {
       title: 'Delete',
-      onClick: () => {
-        console.log('Delete');
-        onDelete();
-      },
+      onClick: onDelete,
     },
   ];
 

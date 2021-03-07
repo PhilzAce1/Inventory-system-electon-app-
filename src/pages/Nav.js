@@ -1,5 +1,5 @@
 import React from 'react';
-// import Input from '../components/Input';
+import { navStyles as style } from '../Util/JSXstyles';
 function Nav(props) {
   return (
     <div style={style.body}>
@@ -9,24 +9,4 @@ function Nav(props) {
     </div>
   );
 }
-const style = {
-  body: {
-    width: '100%',
-    height: '6%',
-    display: 'flex',
-    flexFlow: 'row nowrap',
-  },
-  firstDiv: {
-    width: '19%',
-    paddingLeft: '50px',
-    fontSize: '1.4rem',
-    paddingTop: 0,
-  },
-  secoundDiv: {
-    width: '91%',
-    paddingLeft: '0px',
-    fontSize: '1rem',
-    paddingTop: 10,
-  },
-};
 export default Nav;

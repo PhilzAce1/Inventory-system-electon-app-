@@ -105,11 +105,6 @@ class Tabz extends React.Component {
   rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       this.props.setters(selectedRowKeys, selectedRowKeys);
-      // console.log(
-      //   `selectedRowKeys: ${selectedRowKeys}`,
-      //   'selectedRows: ',
-      //   selectedRows
-      // );
     },
     getCheckboxProps: (record) => ({
       disabled: record.name === 'Disabled User',
@@ -120,24 +115,24 @@ class Tabz extends React.Component {
   render() {
     const columns = [
       {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'Product',
+        dataIndex: 'product',
+        key: 'product',
         width: '30%',
-        ...this.getColumnSearchProps('name'),
+        ...this.getColumnSearchProps('product'),
       },
       {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: 'Count',
+        dataIndex: 'count',
+        key: 'count',
         width: '20%',
-        ...this.getColumnSearchProps('age'),
+        ...this.getColumnSearchProps('count'),
       },
       {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
-        ...this.getColumnSearchProps('address'),
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
+        ...this.getColumnSearchProps('id'),
       },
     ];
     return (
