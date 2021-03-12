@@ -1,5 +1,5 @@
-const electron = require('electron');
-const app = electron.app;
+const electron = require('electron'); // import electron package
+const app = electron.app; // assign the electron 'app' method to the app constant
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
@@ -10,7 +10,7 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({ width: 1020, height: 720 });
-  mainWindow.setMenuBarVisibility(false);
+  mainWindow.setMenuBarVisibility(false); // display menu
   mainWindow.loadURL(
     isDev
       ? 'http://localhost:3000'
